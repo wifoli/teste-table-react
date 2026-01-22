@@ -1,0 +1,14 @@
+{
+    "name": "@front-engine/tailwind-config",
+    "version": "0.0.1",
+    "main": "index.mjs",
+    "type": "module",
+    "private": true,
+    "files": [
+        "index.mjs",
+        "styles.css"
+    ],
+    "peerDependencies": {
+        "tailwindcss": "^3.4.17"
+    }
+}
