@@ -1,0 +1,130 @@
+@tailwind components;
+
+
+.p-column-title {
+    font-size: 0.875rem; /* text-sm */
+}
+
+@layer components {
+
+    /* ===== Shared Table Layout ===== */
+
+    .p-datatable-table {
+        @apply border-separate border-spacing-y-1;
+    }
+
+    .p-datatable .p-datatable-tbody > tr > td {
+        @apply py-3 px-4 text-sm;
+    }
+
+    .p-datatable-thead > tr > th,
+    .p-datatable-tbody > tr > td {
+        @apply border-none;
+    }
+
+    .p-datatable-thead > tr > th:first-child,
+    .p-datatable-tbody > tr > td:first-child {
+        @apply rounded-l-lg;
+    }
+
+    .p-datatable-thead > tr > th:last-child,
+    .p-datatable-tbody > tr > td:last-child {
+        @apply rounded-r-lg;
+    }
+
+    /* ===== Sortable DataTable ===== */
+
+    .p-datatable .p-datatable-thead > tr > th {
+        @apply bg-turquoise-faded-10
+               text-deep-teal
+               font-semibold;
+    }
+
+    .p-datatable .p-sortable-column-icon {
+        @apply text-deep-teal;
+    }
+
+    .p-datatable .p-sortable-column:hover,
+    .p-datatable .p-sortable-column:hover .p-sortable-column-icon {
+        @apply text-turquoise;
+    }
+
+    .p-datatable
+    .p-sortable-column[aria-sort="ascending"] .p-sortable-column-icon,
+    .p-datatable
+    .p-sortable-column[aria-sort="descending"] .p-sortable-column-icon,
+    .p-sortable-column-badge {
+        @apply text-turquoise;
+    }
+
+    .p-datatable .p-datatable-tbody > tr:hover {
+        @apply bg-turquoise/10;
+    }
+
+    .p-datatable .p-datatable-tbody > tr.p-highlight {
+        @apply bg-turquoise/10 text-turquoise;
+    }
+
+    .p-datatable .p-datatable-emptymessage td {
+        @apply text-center text-deep-teal italic py-6;
+    }
+
+    /* ===== Deep Teal Variant ===== */
+
+    .p-simple-deep-teal .p-datatable-thead > tr > th {
+        @apply bg-deep-teal/10 text-deep-teal font-semibold;
+    }
+
+    .p-simple-deep-teal .p-datatable-tbody > tr:hover {
+        @apply bg-deep-teal/10;
+    }
+
+    .p-simple-deep-teal .p-datatable-tbody > tr.p-highlight {
+        @apply bg-deep-teal/10 text-deep-teal;
+    }
+
+    .p-simple-deep-teal .p-datatable-emptymessage td {
+        @apply text-center text-deep-teal italic py-6;
+    }
+
+    /* ===== Turquoise Variant ===== */
+
+    .p-simple-turquoise .p-datatable-thead > tr > th {
+        @apply bg-turquoise/10 text-turquoise font-semibold;
+    }
+
+    .p-simple-turquoise .p-datatable-tbody > tr:hover {
+        @apply bg-turquoise/10;
+    }
+
+    .p-simple-turquoise .p-datatable-tbody > tr.p-highlight {
+        @apply bg-turquoise/10 text-turquoise;
+    }
+
+    .p-simple-turquoise .p-datatable-emptymessage td {
+        @apply text-center text-turquoise italic py-6;
+    }
+
+    /* ===== Nested Table ===== */
+
+    .p-nested-table {
+        @apply border-separate border-l-4 border-turquoise rounded-lg;
+    }
+
+    .p-nested-table .p-datatable-table {
+        @apply border-spacing-0;
+    }
+
+    .p-nested-table .p-datatable-tbody > tr:last-child > td:last-child {
+        @apply rounded-b-lg;
+    }
+
+    .p-nested-table .p-datatable-tbody > tr {
+        @apply text-deep-teal rounded-none;
+    }
+
+    .p-nested-table .p-datatable-tbody > tr td,
+    .p-nested-table .p-datatable-thead > tr th {
+        @apply p-4 rounded-none;
+    }
+}

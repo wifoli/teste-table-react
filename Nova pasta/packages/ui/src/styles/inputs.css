@@ -1,0 +1,54 @@
+.p-placeholder {
+    @apply text-gray-400 !important;
+}
+
+.p-multiselect-label {
+    @apply p-0 !important;
+}
+
+.p-multiselect-trigger {
+    @apply w-auto !important;
+}
+
+.p-multiselect-panel {
+    @apply min-w-min flex-1 !important;
+}
+
+.p-multiselect-filter-container .p-inputtext {
+    @apply border border-gray-300 focus:ring-1 focus:ring-turquoise;
+}
+
+.p-multiselect-select-all .p-checkbox-box,
+.p-multiselect-checkbox .p-checkbox-box {
+    @apply border border-gray-300;
+}
+
+.p-multiselect-item {
+    @apply focus:text-turquoise focus:bg-turquoise-faded-10 hover:bg-turquoise-faded-10 hover:text-turquoise aria-checked:text-turquoise aria-checked:bg-turquoise-faded-10;
+}
+
+.p-checkbox.p-highlight .p-checkbox-box {
+    @apply bg-turquoise border-turquoise font-bold;
+}
+
+.p-highlight {
+    @apply text-turquoise;
+}
+
+.p-multiselect-items .p-focus {
+    @apply bg-turquoise-faded-10;
+}
+
+.p-multiselect:not(.p-disabled).p-focus,
+.p-inputtext:focus,
+.p-calendar:not(.p-disabled).p-focus > .p-inputtext {
+    @apply ring-1 ring-turquoise z-10;
+    box-shadow:
+        var(--tw-ring-offset-shadow),
+        var(--tw-ring-shadow),
+        0 0 0 0.25rem #00ae9c40 !important;
+}
+
+.p-multiselect-filter {
+    @apply px-2 py-1 rounded-md;
+}

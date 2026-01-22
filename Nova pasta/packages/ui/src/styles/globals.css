@@ -1,0 +1,75 @@
+@import "primereact/resources/themes/lara-light-blue/theme.css";
+@import "primereact/resources/primereact.min.css";
+@import "primeicons/primeicons.css";
+
+@tailwind components;
+
+
+.card-shadow {
+    box-shadow: 0 4px 4px 1px rgba(0, 0, 0, 0.15);
+}
+
+.card-shadow-inner {
+    box-shadow: inset 0 0 6px 1px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes card-fade-in {
+    from {
+        opacity: 0;
+        transform: translateX(-1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-card-fade-in {
+    animation: card-fade-in 350ms ease-out forwards;
+}
+
+@layer components {
+
+    .border-card {
+        @apply border-border-card;
+    }
+
+    .transform-button {
+        @apply transition-transform duration-200
+               hover:-translate-y-[2px]
+               active:translate-y-0;
+    }
+
+    /* 🔥 Animate Shine otimizado */
+    .animate-shine {
+        @apply relative overflow-hidden
+               transition-colors duration-300
+               hover:shadow-md
+               active:scale-95;
+    }
+
+    .animate-shine::after {
+        content: "";
+        @apply absolute inset-0
+               -translate-x-full
+               bg-gradient-to-r
+               from-transparent via-white/60 to-transparent
+               opacity-0
+               transition-all duration-700 ease-in-out;
+    }
+
+    .animate-shine:hover::after {
+        @apply translate-x-full opacity-100;
+    }
+}
+
+
+button:focus,
+button:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.p-scrollpanel .p-scrollpanel-bar-y {
+    left: 100% !important;
+}
