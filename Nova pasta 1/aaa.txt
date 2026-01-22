@@ -1,0 +1,205 @@
+const GarantiaRealItem = memo(function GarantiaRealItem({
+    form,
+    index: garantiaIndex,
+}: {
+    form: UseFormResult<Sumula>;
+    index: number;
+}) {
+    return (
+        <Card className="col-span-4">
+            <FormLayout columns={4} gap={4}>
+                {/* Campos da GarantiaReal */}
+                <FormCol span={1}>
+                    <FormField
+                        name={`garantiasReais.${garantiaIndex}.grupoGarantia`}
+                        form={form}
+                        label="Grupo de Garantia"
+                    >
+                        {(props) => <InputText {...props} />}
+                    </FormField>
+                </FormCol>
+
+                <FormCol span={1}>
+                    <FormField
+                        name={`garantiasReais.${garantiaIndex}.valorGarantia`}
+                        form={form}
+                        label="Valor da Garantia"
+                    >
+                        {(props) => <InputNumber {...props} mode="currency" />}
+                    </FormField>
+                </FormCol>
+
+                {/* ... outros campos ... */}
+
+                {/* 🔑 ARRAY ANINHADO - Pessoas da Garantia */}
+                <FormCol span={4}>
+                    <Heading3>Pessoas vinculadas à garantia</Heading3>
+                </FormCol>
+
+                <FormArray<Sumula, GarantiaRealPessoa>
+                    form={form}
+                    name={`garantiasReais.${garantiaIndex}.pessoas` as keyof Sumula}
+                >
+                    {(pessoa, pessoaIndex, removePessoa) => (
+                        <GarantiaRealPessoaItem
+                            key={pessoaIndex}
+                            form={form}
+                            garantiaIndex={garantiaIndex}
+                            pessoaIndex={pessoaIndex}
+                            onRemove={removePessoa}
+                        />
+                    )}
+                </FormArray>
+            </FormLayout>
+        </Card>
+    );
+});
+
+// Componente para cada pessoa da garantia
+const GarantiaRealPessoaItem = memo(function GarantiaRealPessoaItem({
+    form,
+    garantiaIndex,
+    pessoaIndex,
+    onRemove,
+}: {
+    form: UseFormResult<Sumula>;
+    garantiaIndex: number;
+    pessoaIndex: number;
+    onRemove: () => void;
+}) {
+    // O path fica: garantiasReais.0.pessoas.0.nome
+    const basePath = `garantiasReais.${garantiaIndex}.pessoas.${pessoaIndex}`;
+
+    return (
+        <Card className="col-span-4 bg-gray-50">
+            <FormLayout columns={4} gap={4}>
+                <FormCol span={1}>
+                    <FormField
+                        name={`${basePath}.pessoaId`}
+                        form={form}
+                        label="CPF/CNPJ"
+                    >
+                        {(props) => (
+                            <InputMask {...props} mask="999.999.999-99" />
+                        )}
+                    </FormField>
+                </FormCol>
+
+                <FormCol span={2}>
+                    <FormField
+                        name={`${basePath}.nome`}
+                        form={form}
+                        label="Nome"
+                    >
+                        {(props) => <InputText {...props} />}
+                    </FormField>
+                </FormCol>
+
+                <FormCol span={1}>
+                    <FormField
+                        name={`${basePath}.responsabilidade`}
+                        form={form}
+                        label="Responsabilidade"
+                    >
+                        {(props) => <InputText {...props} />}
+                    </FormField>
+                </FormCol>
+
+                <FormCol span={1}>
+                    <Button 
+                        icon="pi pi-trash" 
+                        severity="danger" 
+                        onClick={onRemove}
+                    />
+                </FormCol>
+            </FormLayout>
+        </Card>
+    );
+});
+```
+
+---
+
+## Resumo Visual da Estrutura
+```
+Sumula
+├── garantiasReais[]                    ← FormArray principal
+│   ├── [0]                             ← GarantiaRealItem (memo)
+│   │   ├── grupoGarantia               ← FormField
+│   │   ├── valorGarantia               ← FormField
+│   │   ├── ultimaAtualizacao           ← FormField
+│   │   ├── anoModelo                   ← FormField
+│   │   └── pessoas[]                   ← FormArray aninhado
+│   │       ├── [0]                     ← GarantiaRealPessoaItem (memo)
+│   │       │   ├── pessoaId            ← FormField
+│   │       │   ├── nome                ← FormField
+│   │       │   └── responsabilidade    ← FormField
+│   │       └── [1]                     ← GarantiaRealPessoaItem (memo)
+│   └── [1]                             ← GarantiaRealItem (memo)
+
+
+
+
+
+
+Solução: Memoizar os inputs
+tsx// InputText.tsx
+import { memo } from 'react';
+
+export const InputText = memo(function InputText({
+    fullWidth = false,
+    error = false,
+    helperText,
+    label,
+    required = false,
+    className,
+    id,
+    startAddon,
+    endAddon,
+    inGroup = false,
+    ...props
+}: InputTextProps) {
+    // ... código existente
+});
+
+InputText.displayName = 'InputText';
+
+
+
+Opção 3 (Melhor): Mudar a API para aceitar o componente, não a instância
+tsx// InputNumber aceita o componente em vez da instância
+interface InputNumberProps {
+    StartIcon?: React.ComponentType<{ size?: number }>;
+    // ...
+}
+
+export const InputNumber = memo(function InputNumber({
+    StartIcon,
+    // ...
+}: InputNumberProps) {
+    return (
+        <div>
+            {StartIcon && (
+                <span className="...">
+                    <StartIcon size={24} />
+                </span>
+            )}
+            {/* ... */}
+        </div>
+    );
+});
+
+// Uso - passa o componente, não instância
+<InputNumber StartIcon={PercentIcon} ... />
+
+
+
+📋 Lista de Componentes para Memoizar
+Todos esses devem ter memo:
+ComponenteArquivoInputTextInputText.tsxInputNumberInputNumber.tsxInputMaskInputMask.tsxCalendarCalendar.tsxDropdownDropdown.tsxMultiSelectMultiSelect.tsxCheckboxCheckbox.tsxCardCard.tsxFormColFormLayout.tsx
+
+Resumo
+O que fazer Por quê
+Adicionar memo em todos os inputsEvita re-render quando props são iguais
+Memoizar ou extrair íconesstartAddon={<Icon />} cria nova ref toda vez
+Manter componentes de array foraEvita recriação a cada render do pai
