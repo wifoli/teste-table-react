@@ -1,0 +1,5 @@
+@import "@front-engine/assets/styles.css";
+@import "@front-engine/tailwind-config/styles.css";
+@import "@front-engine/panel/styles.css";
+@import "@front-engine/ui/styles.css";
+@import "@front-engine/utils-react/styles.css";
